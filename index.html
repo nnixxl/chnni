@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>致最好的女孩</title>
+    <style>
+        *,body{
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            /*background: #000000;*/
+            background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+            /*background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);*/
+            /*background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);*/
+            /*background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);*/
+            /*background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%);*/
+            /*background-image: linear-gradient(180deg, #2af598 0%, #009efd 100%);*/
+            /*background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);*/
+            /*background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
+            /*background-image: linear-gradient(to top, #9795f0 0%, #fbc8d4 100%);*/
+            /*background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);*/
+            /*background-image: linear-gradient(to right, #434343 0%, black 100%);*/
+            /*background-image: linear-gradient(45deg, #8baaaa 0%, #ae8b9c 100%);*/
+            /*background-image: linear-gradient(to top, #09203f 0%, #537895 100%);*/
+            /*background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);*/
+            position: absolute;
+            overflow: hidden;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .text {
+            text-align: center;
+            position: absolute;
+            z-index: 99;
+            color: #e32929;
+            top: 50%;
+            /*left: calc((100% - 230px)/2);*/
+            left: 50%;
+            width: 350px;
+            height: 200px;
+            margin-top: -75px;
+            margin-left: -175px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            word-spacing: 10px;
+            transition: all 1s;
+        }
+        .line{
+            width: 100%;
+            text-align: center;
+            padding-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #f60374;
+        }
+        .line .en{
+           font-size: 12px;
+        }
+
+        #say{
+            display: none;
+        }
+        #switch{
+           margin-top: 50px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        #switch:hover{
+            color: #f60374;
+            transition: all 1s;
+            transform: scale(1.8,1.8);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="text">
+        <div id="say">
+            <div class="line"><p>我永远爱你</p><p class="en">I love you forever.</p></div>
+            <div class="line"><p>不知道说些什么</p><p class="en">I don not say nothing</p></div>
+            <div class="line"><p>但是一直都喜欢你</p><p class="en">but I live you forever</p></div>
+            <div class="line"><p>有过犹豫，有过怀疑，但还是觉得你最好</p><p class="en">with pause，with that but I think you are the best gril in the world.</p></div>
+            <div class=“line“><p>我那啥，把你生日记错了，哈哈，是10月26的，还是新历的哈</p></div>
+    </div>
+        <div id="switch">嗯哼，点我🎁有惊喜</div>
+    </div>
+
+    <canvas id="heart"></canvas>
+    <audio src="bgm.mp3" id="bgm"></audio>
+</div>
+
+<script src="heart.js"></script>
+<script>
+    window.onload=function (){
+
+        Element.prototype.typeWrite=function (speed){
+            let me = this;
+            let meHtml = me.innerHTML;
+            let index=0;
+            me.style.setProperty("display","block","important");
+            let task = setInterval(function (){
+                let f = meHtml.substr(index,1);
+                if(f == "<"){
+                    index = meHtml.indexOf(">",index);
+                }else {
+                    index++;
+                }
+                me.innerHTML=meHtml.substring(0,index)+(index & 1?"_":"");
+                if(index>=meHtml.length){
+                    clearInterval(task);
+                }
+            },speed);
+            return this;
+        }
+
+
+        let switchEl = document.getElementById('switch');
+        switchEl.onclick=function (e){
+            let bgm = document.getElementById("bgm");
+            bgm.volume=0.5;
+            bgm.play();
+            switchEl.style.setProperty("display","none","important");
+            if(!bgm.paused){
+                setTimeout(()=>{
+                    let say = document.getElementById('say');
+                    say.typeWrite(35);
+                },100)
+            }
+            let canvas = document.getElementById('heart');
+            let heart = new Heart(canvas);
+            heart.init();
+        }
+    }
+</script>
+</body>
+</html>
